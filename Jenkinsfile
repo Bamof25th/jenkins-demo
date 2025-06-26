@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        // Example environment variables
         IMAGE_NAME = 'pokedesk'
         CONTAINER_PORT = '80'
         HOST_PORT = '80'
@@ -9,8 +8,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Pull code from SCM
-                checkout scm
+                // Replace with your actual git repository URL
+                git branch: 'main', url: 'https://github.com/Bamof25th/jenkins-demo'
             }
         }
         stage('Build Docker Image') {
@@ -20,9 +19,7 @@ pipeline {
         }
         stage('Run Container') {
             steps {
-                // Stop and remove any existing container
                 sh 'docker rm -f $IMAGE_NAME || true'
-                // Run the new container
                 sh 'docker run -d --name $IMAGE_NAME -p $HOST_PORT:$CONTAINER_PORT $IMAGE_NAME'
             }
         }
